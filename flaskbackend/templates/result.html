@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Optimal Route Result</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container">
+  <h1 class="mt-5">Optimal Route Result</h1>
+  
+  <h3>Bus Segment (Birla Planetarium to RMK Engineering College):</h3>
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Stop Name</th>
+        <th>Waiting Time (min)</th>
+        <th>Walking Time to RMK Engg College (min)</th>
+        <th>Fare (₹)</th>
+        <th>Total Cost</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for r in bus_results %}
+      <tr {% if r.stop.id == optimal_bus_stop.id %} class="table-success" {% endif %}>
+        <td>{{ r.stop.name }}</td>
+        <td>{{ r.waiting_time }}</td>
+        <td>{{ r.walking_time | round(1) }}</td>
+        <td>{{ r.fare }}</td>
+        <td>{{ r.total_cost | round(1) }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <h4>Recommended Bus Stop: {{ optimal_bus_stop.name }}</h4>
+  
+  <hr>
+  
+  <h3>Train Segment (RMK Engineering College to Avadi):</h3>
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Station Name</th>
+        <th>Waiting Time (min)</th>
+        <th>Walking Time to Home (min)</th>
+        <th>Fare (₹)</th>
+        <th>Total Cost</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for r in train_results %}
+      <tr {% if r.station.id == optimal_train_station.id %} class="table-success" {% endif %}>
+        <td>{{ r.station.name }}</td>
+        <td>{{ r.waiting_time }}</td>
+        <td>{{ r.walking_time | round(1) }}</td>
+        <td>{{ r.fare }}</td>
+        <td>{{ r.total_cost | round(1) }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <h4>Recommended Train Station: {{ optimal_train_station.name }}</h4>
+  
+  <hr>
+  <h3>Overall Journey Cost: {{ overall_cost | round(1) }}</h3>
+  <p>Note: Lower cost implies a faster and more efficient route.</p>
+  <a href="{{ url_for('index') }}" class="btn btn-secondary">Back to Demo</a>
+</div>
+</body>
+</html>
